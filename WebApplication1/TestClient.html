@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>Test Client for WebUI</title>
+
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/kendo/2014.1.318/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/kendo/2014.1.318/kendo.bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>People</h1>
+    <div id="peopleGrid"></div>
+    <!--div ng-controller="ab">
+        <h1>{{ title }}</h1>
+        <table class="table table-bordered table-striped table-responsive">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Short Name</th>
+                <th>Logo</th>
+            </tr>
+            <tr ng-repeat="client in clients">
+                <td>{{client.ClientID}}</td>
+                <td>{{client.CientName}}</td>
+                <td>{{client.Description}}</td>
+                <td>{{client.ShortName}}</td>
+                <td>{{client.Logo}}</td>
+            </tr>
+        </table>
+    </!--div-->
+    <script src="Scripts/jquery-3.1.0.js"></script>        
+    <script src="Scripts/bootstrap.js"></script>
+    <!--script src="Scripts/angular.min.js"></!--script-->    
+    <script src="Scripts/kendo/2014.1.318/kendo.web.min.js"></script>
+    <script>
+        /*
+        try
+        {
+            (function () {
+                var app = angular.module("app", []);
+                alert("After angular js call " + app);
+                app.controller("ab", function ($scope, $http) {
+                    $scope.title = "Clients";
+                    $http.get("/api/Test").then(function (response) {
+                        $scope.clients = response.data;
+                    });
+                });
+            }());
+        }
+        catch (err) { alert("Custom Error : " + err.message); }
+        */
+                
+        $(function () {
+            alert("Entered jquery");
+            $("#peopleGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/Test"
+                        },
+                        create: {
+                            url: "/Test",
+                            type: "POST"
+                        },
+                        update: {
+                            url: "/Test",
+                            type: "PUT"
+                        },
+                        destroy: {
+                            url: "/Test",
+                            type: "DELETE"
+                        }
+                    },
+                    schema: {
+                        model: {
+                            id: "ID"
+                        }
+                    }
+                },
+                columns : [
+                    { field : "ClientID", title: "Client ID"},
+                    {field: "ClientName", title: "Client Name"},
+                    { field: "Description", title: "Details" },
+                    { field: "ShortName", title: "Short Name" },
+                    { field: "Logo", title: "Client Logo" },
+                    { command: ["edit", "destroy"] }
+                ],
+                toolbar: [
+                    { name : "create" }
+                ],
+                sortable: true,
+                filterable: true,
+                editable: "popup"
+            });
+        });  
+    </script>
+</body>
+</html>
